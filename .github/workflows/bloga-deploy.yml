@@ -6,6 +6,8 @@ on:
 env:
   AUTH1_CLIENT_ID: ${{ secrets.AUTH1_CLIENT_ID }}
   AUTH1_CLIENT_SECRET: ${{ secrets.AUTH1_CLIENT_SECRET }}
+  BLOGA_CLIENT_ID:  ${{ secrets.BLOGA_CLIENT_ID }}
+  BLOGA_CLIENT_SECRET:  ${{ secrets.BLOGA_CLIENT_SECRET }}
   BLOGA_SITE_CONFIG_URL: ${{ secrets.BLOGA_SITE_CONFIG_URL }}
   SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY }}
 jobs:
@@ -62,8 +64,8 @@ jobs:
             method: 'POST'
             data: |
               {
-                "client_id": "${{ secrets.BLOGA_CLIENT_ID }}",
-                "client_secret": "${{ secrets.BLOGA_CLIENT_SECRET }}",
+                "client_id": "${{ env.BLOGA_CLIENT_ID }}",
+                "client_secret": "${{ env.BLOGA_CLIENT_SECRET }}",
                 "grant_type": "client_credentials"
               }
       - id: blogaAccessToken
