@@ -55,7 +55,27 @@ jobs:
             }else{
               return false
             }
-  
+      - id: blogaAccessTokenResponse
+        uses: fjogeleit/http-request-action@v1.3.1
+        with:
+            url: 'https://auth.owenyoung.com/api/v1/oauth/token'
+            method: 'POST'
+            data: |
+              {
+                "client_id": "${{ secrets.BLOGA_CLIENT_ID }}",
+                "client_secret": "${{ secrets.BLOGA_CLIENT_SECRET }}",
+                "grant_type": "client_credentials"
+              }
+      - id: blogaAccessToken
+        uses: actions/github-script@v2
+        env:
+          RESPONSE: ${{ steps.blogaAccessTokenResponse.outputs.response }}
+        with:
+          script: |
+            console.log('process.env.RESPONSE',process.env.RESPONSE)
+            const response = JSON.parse(process.env.RESPONSE)
+            return response.data.access_token
+          
   build:
     needs: init
     runs-on: ubuntu-latest
@@ -140,11 +160,27 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.repos.createPagesSite({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          })
-                        .catch(e=>{
-                          console.error('error',e)
-                        })
+            github.request(`GET /repos/:owner/:repo/pages`,{
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            }).then(data=>{
+              console.log('data',data)
+            }).catch((e)=>{
+              console.log('e',e)
+              if(e && e.status===404){
+                // then manual trigger
+                github.request(`POST /repos/:owner/:repo/pages`,{
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  mediaType: {
+                    previews: ["switcheroo"]
+                  }
+                }).then(result=>{
+                  console.log('success result',result)
+                }).catch(e=>{
+                  console.error('error',e)
+                });
+              }
+            })
+
   
