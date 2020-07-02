@@ -62,12 +62,7 @@ jobs:
         with:
             url: 'https://auth.owenyoung.com/api/v1/oauth/token'
             method: 'POST'
-            data: |
-              {
-                "client_id": "${{ env.BLOGA_CLIENT_ID }}",
-                "client_secret": "${{ env.BLOGA_CLIENT_SECRET }}",
-                "grant_type": "client_credentials"
-              }
+            data: '{"client_id": "${{ env.BLOGA_CLIENT_ID }}","client_secret": "${{ env.BLOGA_CLIENT_SECRET }}","grant_type":"client_credentials"}'
       - id: blogaAccessToken
         uses: actions/github-script@v2
         env:
