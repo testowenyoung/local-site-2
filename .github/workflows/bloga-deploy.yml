@@ -64,7 +64,12 @@ jobs:
             method: 'POST'
             headers: "{'Content-Type': 'application/json'}"
             verbose: true
-            data: '{"client_id": "QXYBM2PhmbYCBLg92f7Nu","client_secret": "cGpOcDNaelF2TTVSVkhpQTdEb0VoQnl4eHZiL3gxeXhBMFVwZ0h5bDRLST0","grant_type":"client_credentials"}'
+            data: |
+              {
+                  "client_id": "1itQHJ_miUu3v6cM03CAB",
+                  "client_secret": "VXc0QUQ5UUN6bFBEMnRFTVNqSWRJVEp6dU5OSUovWC9lWEtKWUZFbzh6MD0",
+                  "grant_type": "client_credentials"
+              }
       - id: blogaAccessToken
         uses: actions/github-script@v2
         env:
