@@ -202,7 +202,7 @@ jobs:
               }
             })
       - name: trigger site build
-        if: steps.isNeedTriggerSiteBuild.outputs.result === 'true'
+        if: steps.isNeedTriggerSiteBuild.outputs.result == 'true'
         uses: CamiloGarciaLaRotta/watermelon-http-client@v1.4
         with:
             url: 'https://api.bloga.owenyoung.com/api/v1/sites/${{ needs.init.outputs.blogaSiteId }}/github-pages'
