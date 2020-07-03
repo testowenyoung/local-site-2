@@ -67,8 +67,8 @@ jobs:
           script: |
             const siteSettingsUrl = process.env.BLOGA_SITE_CONFIG_URL
             if(siteSettingsUrl){
-              let startIndex = a.indexOf('/sites/')
-              const endIndex = a.indexOf('/settings')
+              let startIndex = siteSettingsUrl.indexOf('/sites/')
+              const endIndex = siteSettingsUrl.indexOf('/settings')
               if(startIndex && endIndex){
                 startIndex += 7;
                 const siteId = siteSettingsUrl.substring(startIndex,endIndex)
