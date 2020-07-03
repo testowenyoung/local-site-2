@@ -59,6 +59,7 @@ jobs:
             }else{
               return false
             }
+          result-encoding: string
       - id: blogaSiteId
         uses: actions/github-script@v2
         env:
@@ -79,7 +80,8 @@ jobs:
 
             } else {
               core.setFailed('can not detect bloga site config url')
-            }          
+            }
+          result-encoding: string          
       - id: blogaAccessTokenResponse
         uses: CamiloGarciaLaRotta/watermelon-http-client@v1.4
         with:
@@ -99,8 +101,7 @@ jobs:
             }else{
               core.setFailed(`Can not get bloga access token`);
             }
-            
-          
+          result-encoding: string
   build:
     needs: init
     runs-on: ubuntu-latest
