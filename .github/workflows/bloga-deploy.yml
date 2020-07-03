@@ -58,13 +58,13 @@ jobs:
               return false
             }
       - id: blogaAccessTokenResponse
-        uses: theowenyoung/watermelon-http-client@master
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1.4
         with:
             url: 'https://auth.owenyoung.com/api/v1/oauth/token'
             method: 'POST'
             headers: '{"Content-Type": "application/json"}'
-            verbose: "true"
-            data: '{"client_id": "1itQHJ_miUu3v6cM03CAB", "client_secret": "VXc0QUQ5UUN6bFBEMnRFTVNqSWRJVEp6dU5OSUovWC9lWEtKWUZFbzh6MD0","grant_type": "client_credentials"}'
+            verbose: true
+            data: '{"client_id": "${{ secrets.BLOGA_CLIENT_ID }}","client_secret": "${{ secrets.BLOGA_CLIENT_SECRET }}","grant_type":"client_credentials"}'
       - id: blogaAccessToken
         uses: actions/github-script@v2
         env:
@@ -73,7 +73,12 @@ jobs:
           script: |
             console.log('process.env.RESPONSE',process.env.RESPONSE)
             const response = JSON.parse(process.env.RESPONSE)
-            return response.data.access_token
+            if(response.data.access_token){
+              return response.data.access_token
+            }else{
+              core.setFailed(`Can not get bloga access token`);
+            }
+            
           
   build:
     needs: init
