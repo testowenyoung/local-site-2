@@ -58,7 +58,7 @@ jobs:
               return false
             }
       - id: blogaAccessTokenResponse
-        uses: theowenyoung/watermelon-http-client@v1.4
+        uses: theowenyoung/watermelon-http-client@v1.5
         with:
             url: 'https://auth.owenyoung.com/api/v1/oauth/token'
             method: 'POST'
